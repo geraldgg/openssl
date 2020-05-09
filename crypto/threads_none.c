@@ -10,7 +10,7 @@
 #include <openssl/crypto.h>
 #include "internal/cryptlib.h"
 
-#if !defined(OPENSSL_THREADS) || defined(CRYPTO_TDEBUG) || defined(ANDROID)
+#if !defined(OPENSSL_THREADS) || defined(CRYPTO_TDEBUG) || defined(ANDROID) 
 
 # if defined(OPENSSL_SYS_UNIX)
 #  include <sys/types.h>

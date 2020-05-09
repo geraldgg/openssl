@@ -64,7 +64,7 @@ if( MSVC )
   endif()
 endif()
 
-install( TARGETS ssl
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib )
+#install( TARGETS ssl
+#    RUNTIME DESTINATION bin
+#    LIBRARY DESTINATION lib
+#    ARCHIVE DESTINATION lib )

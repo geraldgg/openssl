@@ -270,11 +270,14 @@ add_submodule ( x509v3 pcy_cache.c pcy_data.c pcy_lib.c pcy_map.c pcy_node.c pcy
 
 set( CMAKE_THREAD_PREFER_PTHREAD TRUE )
 find_package ( Threads )
-if( NOT Threads_FOUND OR ANDROID)
+if( (NOT Threads_FOUND OR ANDROID) AND NOT APPLE )
+  message(STATUS "thread_none")
   add_submodule ( . threads_none.c )
 elseif( WIN32 )
+  message(STATUS "thread_win")
   add_submodule ( . threads_win.c )
 else()
+  message(STATUS "thread_pthread")
   add_submodule ( . threads_pthread.c )
 endif()
       
@@ -285,7 +288,7 @@ target_include_directories( crypto PUBLIC ${PROJECT_BINARY_DIR}/include )
 if( WIN32 AND NOT CYGWIN )
   target_link_libraries( crypto ws2_32 crypt32 advapi32 user32 atls bcrypt)
 else()
-  if( Threads_FOUND )
+  if( Threads_FOUND OR APPLE)
     target_link_libraries( crypto ${CMAKE_THREAD_LIBS_INIT} )
   endif()
   if( DSO_DLFCN AND HAVE_DLFCN_H )
@@ -308,7 +311,8 @@ if( MSVC )
   endif()
 endif()
 
-install( TARGETS crypto
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib )
+#install( TARGETS crypto
+#    RUNTIME DESTINATION bin
+#    LIBRARY DESTINATION lib
+#    ARCHIVE DESTINATION lib )
+
